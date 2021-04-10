@@ -20,14 +20,14 @@ function displayTodos(task) {                                                   
   createCommentCells.innerHTML = task[task.length - 1].task;                                                        //画面出力-コメント列
   createStatusCells.appendChild(workBtn);                                                                           //画面出力-状態列
   createStatusCells.appendChild(deleteBtn);                                                                         //画面出力-状態列
-
-  for (var filVal = "", filLen = filter.length; filLen--;){                                                         //以下ラジオボタン-完了の場合の処理
+  let selectedStts = '';
+  for (selectedStts, filLen = filter.length; filLen--;){                                                            //以下ラジオボタン-完了の場合の処理
     if (filter[filLen].checked) {                                                                                    //チェックされているラジオボタンを取得
-      var filVal = filter[filLen].value;                                                                              //ラジオボタンの値を取得
+      selectedStts = filter[filLen].value;                                                                            //ラジオボタンの値を取得
       break;
     }
   }
-  if(filVal === 'finish') {                                                                                         //ラジオボタンが完了の場合
+  if(selectedStts === 'finish') {                                                                                   //ラジオボタンが完了の場合
     workBtn.parentNode.parentNode.style.display = 'none';                                                            //追加行は非表示
   };
 
@@ -54,33 +54,33 @@ document.addEventListener('DOMContentLoaded', function() {
     e.addEventListener('change', function(){
       const workFil = document.getElementById('work');                                                                 //ラジオボタンノード取得-作業中
       if(workFil.checked) {                                                                                            //以下、作業中チェック状態の処理
-        for (let statusRowCount = 1, rowLen = outDisp.rows.length; statusRowCount < rowLen; statusRowCount++) {
-          const statusColumn = outDisp.rows[statusRowCount].cells[2];                                                   //状態列取得
-          if(statusColumn.firstElementChild.value === '完了') {                                                         //状態列値-完了：非表示
-            statusColumn.parentNode.style.display = 'none';                                  
+        for (let sttsRowCount = 1, rowLen = outDisp.rows.length; sttsRowCount < rowLen; sttsRowCount++) {
+          const sttsCol = outDisp.rows[sttsRowCount].cells[2];                                                           //状態列取得
+          if(sttsCol.firstElementChild.value === '完了') {                                                               //状態列値-完了：非表示
+            sttsCol.parentNode.style.display = 'none';                                  
           }
-          else {                                                                                                        //状態列値-完了以外：表示
-            statusColumn.parentNode.style.display = '';
+          else {                                                                                                         //状態列値-完了以外：表示
+            sttsCol.parentNode.style.display = '';
           }
         }
       }
       const finFil = document.getElementById('finish');                                                                //ラジオボタンノード取得-完了
       if(finFil.checked) {                                                                                             //以下、完了チャック状態の処理
-        for (let statusRowCount = 1, rowLen = outDisp.rows.length; statusRowCount < rowLen; statusRowCount++) {
-          const statusColumn = outDisp.rows[statusRowCount].cells[2];                                                   //状態列取得
-          if(statusColumn.firstElementChild.value === '作業中') {                                                       //状態列値-作業中：非表示
-            statusColumn.parentNode.style.display = 'none';
+        for (let sttsRowCount = 1, rowLen = outDisp.rows.length; sttsRowCount < rowLen; sttsRowCount++) {
+          const sttsCol = outDisp.rows[sttsRowCount].cells[2];                                                           //状態列取得
+          if(sttsCol.firstElementChild.value === '作業中') {                                                             //状態列値-作業中：非表示
+            sttsCol.parentNode.style.display = 'none';
           }
-          else {                                                                                                        //状態列値-作業中以外：表示
-          statusColumn.parentNode.style.display = '';
+          else {                                                                                                         //状態列値-作業中以外：表示
+            sttsCol.parentNode.style.display = '';
           }
         }
       }
       const allFil = document.getElementById('all');
       if(all.checked) {                                                                                                //以下、全てチェック状態の処理
-        for (let statusRowCount = 1, rowLen = outDisp.rows.length; statusRowCount < rowLen; statusRowCount++) {
-          const statusRowColumn = outDisp.rows[statusRowCount].cells[2];                                                //状態列値取得
-          statusRowColumn.parentNode.style.display = '';                                                                //全てを表示
+        for (let sttsRowCount = 1, rowLen = outDisp.rows.length; sttsRowCount < rowLen; sttsRowCount++) {
+          const sttsCol = outDisp.rows[sttsRowCount].cells[2];                                                           //状態列値取得
+          sttsCol.parentNode.style.display = '';                                                                         //全てを表示
         }
       }
     });
@@ -97,5 +97,3 @@ document.addEventListener('DOMContentLoaded', function() {
   getTask.value = '';                                                                                                //画面タスク入力値クリア
   });
 });
-
-
